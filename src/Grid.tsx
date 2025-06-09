@@ -1,7 +1,7 @@
 import Square from "./Square";
 import { useState } from 'react';
 
-export default function Grid() {
+function Grid() {
   const [grid, setGrid] = useState(() => generateNewGrid());
 
   return (
@@ -35,7 +35,9 @@ function addNewNumber(grid: number[][]): number[][] {
     const [i, j] = emptyCells[Math.floor(Math.random() * emptyCells.length)];
     grid[i][j] = Math.random() < 0.75 ? 2 : 4;
   }
-  
+
   return grid.map(row => [...row]);
 }
-}
+
+
+export default Grid;
