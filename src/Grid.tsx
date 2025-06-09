@@ -41,7 +41,7 @@ function processGrid(grid: number[][], direction: string): number[][] {
   
   // Process based on direction
   for (let i = 0; i < size; i++) {
-    let row = [];
+    let row: number[] = [];
     switch(direction) {
       case 'left':
       case 'right':
