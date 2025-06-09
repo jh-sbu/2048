@@ -16,7 +16,7 @@
 
 .square {
   aspect-ratio: 1;
-  background-color: rgba(238, 228, 218, 0.35);
+  background-color: #cdc1b4;
   border-radius: 3px;
   display: flex;
   justify-content: center;
