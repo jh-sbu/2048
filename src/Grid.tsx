@@ -53,9 +53,16 @@ function processGrid(grid: number[][], direction: string): number[][] {
         break;
     }
 
-    // Remove zeros and merge
+    // Process right/down directions by reversing the array before merging
     let filtered = row.filter(x => x !== 0);
     let merged: number[] = [];
+    
+    // Reverse if we're processing right or down
+    if (direction === 'right' || direction === 'down') {
+      filtered = filtered.reverse();
+    }
+
+    // Merge tiles with proper direction handling
     for (let j = 0; j < filtered.length; j++) {
       if (j < filtered.length - 1 && filtered[j] === filtered[j + 1]) {
         merged.push(filtered[j] * 2);
@@ -65,11 +72,16 @@ function processGrid(grid: number[][], direction: string): number[][] {
       }
     }
 
-    // Add zeros back based on direction
+    // Add zeros to the beginning for right/down directions
     while (merged.length < size) {
       direction === 'left' || direction === 'up' 
         ? merged.push(0) 
         : merged.unshift(0);
+    }
+
+    // Reverse back if we processed right/down
+    if (direction === 'right' || direction === 'down') {
+      merged = merged.reverse();
     }
 
     // Update newGrid based on direction
