@@ -1,3 +1,5 @@
+import Square from "./Square";
+
 export default function Grid() {
   // Temporary initial values for demonstration
   const initialValues = [
