@@ -13,7 +13,7 @@ function Grid() {
 
   const handleKeyDown = (event: KeyboardEvent) => {
     event.preventDefault();
-    switch(event.key) {
+    switch (event.key) {
       case 'ArrowLeft': return moveTiles('left');
       case 'ArrowRight': return moveTiles('right');
       case 'ArrowUp': return moveTiles('up');
@@ -38,11 +38,11 @@ function Grid() {
 function processGrid(grid: number[][], direction: string): number[][] {
   const size = grid.length;
   const newGrid = Array(size).fill(0).map(() => Array(size).fill(0));
-  
+
   // Process based on direction
   for (let i = 0; i < size; i++) {
     let row: number[] = [];
-    switch(direction) {
+    switch (direction) {
       case 'left':
       case 'right':
         row = [...grid[i]];
@@ -56,11 +56,13 @@ function processGrid(grid: number[][], direction: string): number[][] {
     // Process right/down directions by reversing the array before merging
     let filtered = row.filter(x => x !== 0);
     let merged: number[] = [];
-    
+
+    // The reversing code below comes out of nowhere and is not correct
+    // The comment is left here as an example of something not to do
     // Reverse if we're processing right or down
-    if (direction === 'right' || direction === 'down') {
-      filtered = filtered.reverse();
-    }
+    // if (direction === 'right' || direction === 'down') {
+    //   filtered = filtered.reverse();
+    // }
 
     // Merge tiles with proper direction handling
     for (let j = 0; j < filtered.length; j++) {
@@ -74,8 +76,8 @@ function processGrid(grid: number[][], direction: string): number[][] {
 
     // Add zeros to the beginning for right/down directions
     while (merged.length < size) {
-      direction === 'left' || direction === 'up' 
-        ? merged.push(0) 
+      direction === 'left' || direction === 'up'
+        ? merged.push(0)
         : merged.unshift(0);
     }
 
@@ -86,7 +88,7 @@ function processGrid(grid: number[][], direction: string): number[][] {
 
     // Update newGrid based on direction
     for (let j = 0; j < size; j++) {
-      switch(direction) {
+      switch (direction) {
         case 'left':
           newGrid[i][j] = merged[j];
           break;
@@ -102,7 +104,7 @@ function processGrid(grid: number[][], direction: string): number[][] {
       }
     }
   }
-  
+
   return newGrid;
 }
 
