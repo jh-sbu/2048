@@ -23,15 +23,17 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 100px);
   gap: 1rem;
   background-color: #bbada0;
   padding: 1rem;
   border-radius: 5px;
+  width: calc(400px + 3 * 1rem);
 }
 
 .square {
-  aspect-ratio: 1;
+  width: 100px;
+  height: 100px;
   background-color: #cdc1b4;
   border-radius: 3px;
   display: flex;

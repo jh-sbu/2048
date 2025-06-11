@@ -11,7 +11,7 @@ export default function Square({ value }: SquareProps) {
           style={{
             backgroundColor: getBackgroundColor(value),
             color: value > 4 ? '#f9f6f2' : '#776e65',
-            fontSize: value < 100 ? 55 : value < 1000 ? 45 : 35
+            fontSize: value < 100 ? 40 : value < 1000 ? 30 : 25
           }}
         >
           {value}
