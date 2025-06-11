@@ -1,3 +1,10 @@
+.scores-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 10px 0;
+}
+
 .score {
   background-color: #bbada0;
   color: white;
