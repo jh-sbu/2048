@@ -1,18 +1,43 @@
 import Square from "./Square";
 import { useState, useEffect } from 'react';
 
+function hasValidMoves(grid: number[][]): boolean {
+  // Check for empty cells
+  if (grid.some(row => row.some(cell => cell === 0))) return true;
+
+  // Check for possible merges
+  const size = grid.length;
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const current = grid[i][j];
+      // Check right neighbor
+      if (j < size - 1 && current === grid[i][j + 1]) return true;
+      // Check bottom neighbor
+      if (i < size - 1 && current === grid[i + 1][j]) return true;
+    }
+  }
+  return false;
+}
+
 function Grid() {
   const [grid, setGrid] = useState(() => generateNewGrid());
+  const [gameOver, setGameOver] = useState(false);
 
   const moveTiles = (direction: 'left' | 'right' | 'up' | 'down') => {
     const newGrid = processGrid(grid, direction);
     if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
-      setGrid(addNewNumber(newGrid));
+      const updatedGrid = addNewNumber(newGrid);
+      setGrid(updatedGrid);
+      
+      if (!hasValidMoves(updatedGrid)) {
+        setGameOver(true);
+      }
     }
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
     event.preventDefault();
+    if (gameOver) return;
     switch (event.key) {
       case 'ArrowLeft': return moveTiles('left');
       case 'ArrowRight': return moveTiles('right');
@@ -31,6 +56,11 @@ function Grid() {
       {grid.flat().map((value, index) => (
         <Square key={index} value={value} />
       ))}
+      {gameOver && (
+        <div className="game-over-overlay">
+          <div className="game-over-message">Game Over!</div>
+        </div>
+      )}
     </div>
   );
 }
