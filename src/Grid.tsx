@@ -28,7 +28,7 @@ function Grid() {
     if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
       const updatedGrid = addNewNumber(newGrid);
       setGrid(updatedGrid);
-      
+
       if (!hasValidMoves(updatedGrid)) {
         setGameOver(true);
       }
