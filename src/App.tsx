@@ -1,6 +1,6 @@
 import Grid from './Grid'
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
   const [gameKey, setGameKey] = useState(0);
