@@ -1,3 +1,13 @@
+.score {
+  background-color: #bbada0;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 1.5rem;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
 #root {
   max-width: 500px;
   margin: 0 auto;

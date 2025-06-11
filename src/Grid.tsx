@@ -19,15 +19,16 @@ function hasValidMoves(grid: number[][]): boolean {
   return false;
 }
 
-function Grid() {
+function Grid({ onScoreChange }: { onScoreChange?: (delta: number) => void }) {
   const [grid, setGrid] = useState(() => generateNewGrid());
   const [gameOver, setGameOver] = useState(false);
 
   const moveTiles = (direction: 'left' | 'right' | 'up' | 'down') => {
-    const newGrid = processGrid(grid, direction);
+    const { grid: newGrid, delta } = processGrid(grid, direction);
     if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
       const updatedGrid = addNewNumber(newGrid);
       setGrid(updatedGrid);
+      onScoreChange?.(delta);
 
       if (!hasValidMoves(updatedGrid)) {
         setGameOver(true);
@@ -65,9 +66,10 @@ function Grid() {
   );
 }
 
-function processGrid(grid: number[][], direction: string): number[][] {
+function processGrid(grid: number[][], direction: string): { grid: number[][], delta: number } {
   const size = grid.length;
   const newGrid = Array(size).fill(0).map(() => Array(size).fill(0));
+  let delta = 0;
 
   // Process based on direction
   for (let i = 0; i < size; i++) {
@@ -97,7 +99,9 @@ function processGrid(grid: number[][], direction: string): number[][] {
     // Merge tiles with proper direction handling
     for (let j = 0; j < filtered.length; j++) {
       if (j < filtered.length - 1 && filtered[j] === filtered[j + 1]) {
-        merged.push(filtered[j] * 2);
+        const mergedValue = filtered[j] * 2;
+        merged.push(mergedValue);
+        delta += mergedValue;
         j++; // Skip next element since it's merged
       } else {
         merged.push(filtered[j]);
@@ -135,7 +139,7 @@ function processGrid(grid: number[][], direction: string): number[][] {
     }
   }
 
-  return newGrid;
+  return { grid: newGrid, delta };
 }
 
 function generateNewGrid(): number[][] {
