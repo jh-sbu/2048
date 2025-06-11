@@ -3,7 +3,7 @@ import './App.css'
 import { useEffect, useState, useRef } from 'react'
 
 function App() {
-  const gridRef = useRef<{ undo: () => void; canUndo: () => boolean }>();
+  const gridRef = useRef<{ undo: () => void; canUndo: () => boolean } | null>(null);
   const [gameKey, setGameKey] = useState(0);
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(() => {
@@ -37,7 +37,7 @@ function App() {
         <button 
           className="undo-btn" 
           onClick={() => gridRef.current?.undo()}
-          disabled={!gridRef.current?.canUndo()}
+          disabled={!gridRef.current?.canUndo?.()}
         >
           Undo
         </button>
