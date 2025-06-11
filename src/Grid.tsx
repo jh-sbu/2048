@@ -1,5 +1,5 @@
 import Square from "./Square";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 function hasValidMoves(grid: number[][]): boolean {
   // Check for empty cells
@@ -21,11 +21,25 @@ function hasValidMoves(grid: number[][]): boolean {
 
 function Grid({ onScoreChange }: { onScoreChange?: (delta: number) => void }) {
   const [grid, setGrid] = useState(() => generateNewGrid());
+  const [previousGrid, setPreviousGrid] = useState<number[][] | null>(null);
+  const [previousScoreDelta, setPreviousScoreDelta] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+
+  const undo = useCallback(() => {
+    if (previousGrid) {
+      setGrid(previousGrid);
+      onScoreChange?.(-previousScoreDelta);
+      setPreviousGrid(null);
+    }
+  }, [previousGrid, previousScoreDelta, onScoreChange]);
+
+  const canUndo = () => !!previousGrid;
 
   const moveTiles = (direction: 'left' | 'right' | 'up' | 'down') => {
     const { grid: newGrid, delta } = processGrid(grid, direction);
     if (JSON.stringify(newGrid) !== JSON.stringify(grid)) {
+      setPreviousGrid(grid);
+      setPreviousScoreDelta(delta);
       const updatedGrid = addNewNumber(newGrid);
       setGrid(updatedGrid);
       onScoreChange?.(delta);
