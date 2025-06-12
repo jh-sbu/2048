@@ -64,14 +64,25 @@ function App() {
 
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     event.preventDefault();
-    if (gameOver) return;
+    if (gameOver) {
+      // Allow 'N' for new game even if game is over
+      if (event.key === 'n' || event.key === 'N') {
+        startNewGame();
+      }
+      return;
+    }
+
     switch (event.key) {
       case 'ArrowLeft': return moveTiles('left');
       case 'ArrowRight': return moveTiles('right');
       case 'ArrowUp': return moveTiles('up');
       case 'ArrowDown': return moveTiles('down');
+      case 'n':
+      case 'N': return startNewGame();
+      case 'u':
+      case 'U': return undo();
     }
-  }, [moveTiles, gameOver]); // Dependencies for useCallback
+  }, [moveTiles, gameOver, startNewGame, undo]); // Dependencies for useCallback
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
