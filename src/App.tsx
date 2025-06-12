@@ -34,18 +34,18 @@ function App() {
         <button className="new-game-btn" onClick={startNewGame}>
           New Game
         </button>
-        <button 
-          className="undo-btn" 
+        <button
+          className="undo-btn"
           onClick={() => gridRef.current?.undo()}
-          disabled={!gridRef.current?.canUndo?.()}
+          disabled={!gridRef.current?.canUndo()}
         >
           Undo
         </button>
       </div>
-      <Grid 
-        key={gameKey} 
+      <Grid
+        key={gameKey}
         onScoreChange={(delta) => setScore(s => s + delta)}
-        ref={gridRef}
+      // ref={gridRef}
       />
     </div>
   )
